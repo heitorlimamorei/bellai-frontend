@@ -1,7 +1,12 @@
+'use client';
 import Image from 'next/image';
+import InputMessage from '@/components/chat/InputMessage';
+import ChatScreen from '@/components/chat/ChatScreen';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    <main className="flex h-screen w-screen bg-gray-300 flex-col">
+      <ChatScreen></ChatScreen>
+    </main>
   );
 }
