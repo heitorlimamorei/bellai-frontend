@@ -12,6 +12,8 @@ function getMessage(role: IRole, content: string): IMessage {
     }
 }
 
+const baseprompt = `Atue com um psicologo (homem) experiente focado em atender jovens estudantes de uma escola particular de alta renda em que é frequente a ocorrencia de casos de bullying e de assedio emocional. Agora atenda um estudante com o seguinte relato: `;
+
 const systemMessage = getMessage("system", "Olá sou a Bellai, como posso te ajudar ?");
 
 const standardConversation = [
@@ -59,6 +61,17 @@ export default function useChat(){
             }
 
             addMessage(next.role, next.content);
+            return;
+        }
+
+        if (i == 4) {
+            if (!current.content) {
+                removeMessage(current.id);
+                return;
+            }
+
+            sendToBff(current);
+            return;
         }
 
     }, [messages]);
@@ -83,6 +96,72 @@ export default function useChat(){
     const removeMessage = (id: string) => {
         setMessages((c) => c.filter(message => message.id!== id));
     };
+
+    const sendToBff = async (message: IMessage) => {
+        try {
+          let messageF: IMessage = {
+            ...message,
+            content: `${baseprompt} ${message.content}`
+          };
+
+          const messagesF = [...messages, messageF].map(message => ({role: message.role, content: message.content}));
+          await fetch('api/openAi', {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+              conversation: messagesF,
+              model: 'gpt-4',
+            }),
+          }).then(async (reponse: any) => {
+            const reader = reponse.body?.getReader();
+            const nextId = uuidv4();
+
+            setMessages((prev) => {
+              return [
+                ...prev,
+                {
+                  id: nextId,
+                  role: 'assistant',
+                  content: '',
+                },
+              ];
+            });
+    
+            let lastChuck = '';
+    
+            while (true) {
+              const { value, done } = await reader?.read();
+    
+              if (done) {
+                break;
+              }
+    
+              let currentChunck = new TextDecoder().decode(value);
+              if (currentChunck != null) {
+                setMessages((prev) => {
+                  let messages = [...prev];
+                  let i = messages.findIndex((m) => m.id === nextId);
+                  let message = messages[i];
+
+                  if (message != null) {
+                    if (currentChunck != lastChuck) {
+                        message.content = message.content.concat(currentChunck);
+                        messages[i] = message;
+                      }
+                      lastChuck = currentChunck;
+                  }
+                  return messages;
+
+                });
+              }
+            }
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     return {
         messages,
