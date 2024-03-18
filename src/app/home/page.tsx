@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="h-screen w-screen bg-white-800">
+    <div className="h-screen w-screen bg-white">
      <Header/>
      <Content/>
     </div>
