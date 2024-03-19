@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
-import Chat, { IMessage } from './Chat';
+"use client";
+import Chat from './Chat';
 import InputMessage from './InputMessage';
+import useChat from '@/hooks/useChat';
 
 export default function ChatScreen() {
-  const [messages, setMessages] = useState<IMessage[]>([
-    {
-      role: 'system',
-      content:
-        'Olá, sou a Bella! Estou aqui para ajudar você a lidar com o bullying e oferecer apoio durante este desafio',
-    },
-  ]);
+  const { messages, addMessage } = useChat();
 
   const handleSubmit = (messageContent: string) => {
-    const newMessage: IMessage = { role: 'user', content: messageContent };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    addMessage('user', messageContent);
   };
 
   return (

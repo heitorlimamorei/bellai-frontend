@@ -13,7 +13,7 @@ interface IMessage {
 
 const checkConversation = (messages: IMessage[]): boolean => {
   let result: boolean = true;
-  
+
   messages.forEach((message) => {
     if (message.role == 'assistant' || message.role == 'system' || message.role == 'user') {
       result = true;
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     }
 
     const reponse = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
+      model: 'gpt-4-turbo-preview',
       messages: conversation,
       stream: true,
     });

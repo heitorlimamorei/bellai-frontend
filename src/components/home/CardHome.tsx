@@ -14,9 +14,7 @@ export default function CardHome(props: CardHomeProps) {
       </div>
       <div className="hidden lg:flex flex-column mt-8 p-4 w-full h-fit-content bg-blue-900 rounded-r-3xl shadow-black shadow-lg">
         <div className="w-[20%]">
-          <h1 className="text-white font-serif text-2xl text-left mr-8">
-            {props.title}
-          </h1>
+          <h1 className="text-white font-serif text-2xl text-left mr-8">{props.title}</h1>
         </div>
         <div className="w-[80%] jusify-self-end">
           <p className="text-white">{props.children}</p>

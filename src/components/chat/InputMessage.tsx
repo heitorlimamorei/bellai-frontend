@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import Button from '../Button';
-import Textarea from '../Textarea';
 import { IconSend } from '../Icons';
+import Textarea from '../Textarea';
 
 interface InputMessageProps {
   onSubmit: any;

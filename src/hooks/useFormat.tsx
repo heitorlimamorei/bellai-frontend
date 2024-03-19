@@ -65,9 +65,7 @@ export function useFormat(message: IMessage): React.ReactNode[] {
 
   if (lastIndex < content.length) {
     const remainingContent = content.substring(lastIndex);
-    modifiedContent = modifiedContent.concat(
-      generateTextContent(remainingContent),
-    );
+    modifiedContent = modifiedContent.concat(generateTextContent(remainingContent));
   }
 
   return modifiedContent;

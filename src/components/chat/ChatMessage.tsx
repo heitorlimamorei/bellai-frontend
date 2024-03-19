@@ -17,19 +17,13 @@ export default function ChatMessage(message: IMessage) {
           width={40}
           height={20}
           alt="Ai logo"
-          src={
-            message.role === 'system' || message.role === 'assistant'
-              ? Bella
-              : Profile
-          }
+          src={message.role === 'system' || message.role === 'assistant' ? Bella : Profile}
           className=" rounded-full border-blue-900 border-4"
         />
       </div>
       <div className="bg-blue-900 p-5 rounded-r-3xl rounded-bl-3xl">
         <div className="font-bold self-start ">
-          {message.role === 'system' || message.role === 'assistant'
-            ? 'Bella'
-            : 'Você'}
+          {message.role === 'system' || message.role === 'assistant' ? 'Bella' : 'Você'}
         </div>
         <ul className="mt-2 text-sm mx-2">
           {formattedContent.map((element, index) => (
