@@ -1,11 +1,11 @@
-import React from 'react'
-import NavBar from '@/components/NavBar'
+import Content from '@/components/home/Content';
+import Header from '@/components/home/Header';
+import React from 'react';
 
 export default function Home() {
   return (
-    <div className='w-full h-screen bg-white'>
-        <NavBar></NavBar>
-        
+    <div className="h-screen w-screen bg-white">
+     <Header/>
+     <Content/>
     </div>
-  )
-}
+  );
