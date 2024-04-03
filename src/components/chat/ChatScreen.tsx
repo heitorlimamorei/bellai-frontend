@@ -1,7 +1,8 @@
-"use client";
+'use client';
+import useChat from '@/hooks/useChat';
+
 import Chat from './Chat';
 import InputMessage from './InputMessage';
-import useChat from '@/hooks/useChat';
 
 export default function ChatScreen() {
   const { messages, addMessage } = useChat();
